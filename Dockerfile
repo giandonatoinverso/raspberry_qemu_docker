@@ -7,8 +7,14 @@ RUN apt-get update -y
 RUN apt-get install -y qemu-system-aarch64 fdisk wget mtools xz-utils
 
 WORKDIR /qemu
-COPY raspberry.img ./
 ENV IMAGE_FILE=raspberry.img
+
+# Download image
+RUN wget https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64.img.xz -O raspberry.img.xz
+RUN xz -d ${IMAGE_FILE}.xz
+
+# Copy image
+#COPY raspberry.img ./
 
 # Resize the image to next power of two
 RUN CURRENT_SIZE=$(stat -c%s "${IMAGE_FILE}") && \
@@ -37,7 +43,7 @@ RUN mkdir -p /tmp && \
     # First create ssh file to enable ssh
     touch /tmp/ssh && \
     # Then create userconf file to set default password (raspberry)
-    echo 'raspberryPi:$6$rAnjgjG0.K8cPrnU$6Wk1GT0zwFc9CFQrEZi8NMxDtWKzsQN0x/p.x0/tJFYN9FJjphX9n2pXNMFvBDhYxMF1BJUTdS7sRO987dv6S1' | tee /tmp/userconf
+    echo 'pi:$6$rBoByrWRKMY1EHFy$ho.LISnfm83CLBWBE/yqJ6Lq1TinRlxw/ImMTPcvvMuUfhQYcMmFnpFXUPowjy2br1NA0IACwF9JKugSNuHoe0' | tee /tmp/userconf
 
 # Copy the files onto the image
 RUN mcopy /tmp/ssh x:/ && \

@@ -4,9 +4,15 @@ This repository allows you to virtualize the Raspbian operating system through Q
 - The project is based on the article https://interrupt.memfault.com/blog/emulating-raspberry-pi-in-qemu
 - The setup.sh file takes as its only parameter a URL from which to download the image to be virtualized
 
-Example:
+## Setup:
+- Setup if you have an .img file:
 ```bash
-sudo ./setup.sh "https://downloads.raspberrypi.com/raspios_oldstable_lite_arm64/images/raspios_oldstable_lite_arm64-2024-07-04/2024-07-04-raspios-bullseye-arm64-lite.img.xz"
+sudo ./setup_flash.sh
+```
+
+- Setup if you want to download an official example img file:
+```bash
+sudo ./setup.sh
 ```
 
 ## Pre-processing
